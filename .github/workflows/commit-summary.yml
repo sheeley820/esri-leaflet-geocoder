@@ -1,0 +1,15 @@
+name: Generate Commit Summaries
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+jobs:
+  annotate-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+    name: Annotates pull request with table of component versions
+    steps:
+      - name: "Build Changelog"
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@{latest-release}
