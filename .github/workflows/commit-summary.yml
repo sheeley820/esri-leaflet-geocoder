@@ -8,8 +8,18 @@ jobs:
     permissions:
       pull-requests: write
       issues: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     name: Annotates pull request with table of component versions
     steps:
+      - name: Checkout
+      - uses: actions/checkout@v4
+
       - name: "Build Changelog"
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v5
+        with:
+          configurationJson: |
+            {
+              "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>"
+            }
